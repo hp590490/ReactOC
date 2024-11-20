@@ -6,8 +6,8 @@
   margin: 50px auto;
 
   @media screen and (max-width: 1320px) {
-    margin-right: 40px;
-    margin-left: 40px;
+    margin-right: 20px;
+    margin-left: 20px;
   }
 
   .navigation-left {
@@ -15,8 +15,8 @@
       width: 210px;
       height: 68px;
       @media screen and (max-width: 650px) {
-        width: 150px;
-        height: 45px;
+        width: 105px;
+        height: 34px;
       }
     }
   }
@@ -38,7 +38,7 @@
           transform: scale(1.1);
         }
         @media screen and (max-width: 650px) {
-          font-size: 20px;
+          font-size: 15px;
         }
       }
     }

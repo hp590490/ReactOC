@@ -5,10 +5,10 @@
   margin: 0 auto;
   margin-top: -10px;
   border-radius: 25px;
-  padding: 85px 0;
+  padding: 111.5px 0;
   z-index: 1;
   @media screen and (max-width: 1300px) {
-    margin: 0 40px;
+    margin: 0 20px;
   }
   .overlay-about {
     position: absolute;
@@ -26,7 +26,7 @@
   justify-content: center;
   display: flex;
   align-items: center;
-  padding: 60px 60px;
+  padding: 60px 20px 7px 20px;
 }
 
 .collapsible {
@@ -57,6 +57,12 @@
   border-radius: 15px;
   z-index: 1;
   margin-bottom: 50px;
+  @media screen and (max-width: 1300px) {
+    font-size: 18px;
+  }
+  @media screen and (max-width: 540px) {
+    font-size: 14px;
+  }
 }
 .collapsible label:after {
   content: "";
@@ -69,6 +75,10 @@
   height: 18px;
   background: url(../../assets/img/Vector.png) no-repeat 0 0;
   transition: all 0.5s ease;
+  @media screen and (max-width: 540px) {
+    height: 9px;
+    width: 25px;
+  }
 }
 .collapsible input:checked + label:after {
   transform: rotate(180deg) translateY(50%);
@@ -102,4 +112,7 @@
   background: #fcfcfc;
   text-align: left;
   line-height: 1.2;
+  @media screen and (max-width: 540px) {
+    font-size: 14px;
+  }
 }

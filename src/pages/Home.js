@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Card from "../components/Card";
 import Footer from "../components/Footer";
 import { NavLink } from "react-router-dom";
+import data from "../assets/logements.json";
 
 const Home = () => {
   return (
@@ -13,27 +14,7 @@ const Home = () => {
         <h1>Chez vous, partout et ailleurs</h1>
       </div>
       <div className="section-cards">
-        <NavLink to="/logement">
-          <Card />
-        </NavLink>
-        <NavLink to="/logement">
-          <Card />
-        </NavLink>{" "}
-        <NavLink to="/logement">
-          <Card />
-        </NavLink>{" "}
-        <NavLink to="/logement">
-          <Card />
-        </NavLink>{" "}
-        <NavLink to="/logement">
-          <Card />
-        </NavLink>{" "}
-        <NavLink to="/logement">
-          <Card />
-        </NavLink>{" "}
-        <NavLink to="/logement">
-          <Card />
-        </NavLink>
+        <Card />
       </div>
       <Footer />
     </div>

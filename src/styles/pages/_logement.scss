@@ -1,0 +1,292 @@
+.main-content {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 49px 0;
+  @media screen and (max-width: 1320px) {
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: -30px;
+  }
+  .caroussel {
+    height: 415px;
+    position: relative;
+    border-radius: 15px;
+
+    button {
+      position: absolute;
+      background: none;
+      border: none;
+      outline: none;
+      z-index: 2;
+      cursor: pointer;
+      color: $white;
+      transform: translateY(-50%);
+      top: 50%;
+      font-size: 4rem;
+      @media screen and (max-width: 600px) {
+        font-size: 2.5rem;
+      }
+      @media screen and (max-width: 400px) {
+        font-size: 2rem;
+      }
+    }
+    #prev {
+      left: 10px;
+    }
+    #next {
+      right: 10px;
+    }
+    li {
+      list-style: none;
+    }
+
+    .slide {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      transition: 0.4s ease-in-out;
+
+      &.active {
+        opacity: 1;
+      }
+      img {
+        display: block;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+      }
+    }
+
+    p {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      font-weight: 500;
+      font-size: 18px;
+      color: $white;
+      padding-bottom: 15px;
+      cursor: default;
+    }
+  }
+  .title-card {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-top: 20px;
+    position: relative;
+    .title-card-left {
+      h2 {
+        font-size: 36px;
+        font-weight: 500;
+        color: $color1;
+        line-height: 51px;
+        @media screen and (max-width: 950px) {
+          font-size: 24px;
+          line-height: 40px;
+        }
+      }
+      p {
+        font-size: 18px;
+        line-height: 25px;
+        font-weight: 500;
+        @media screen and (max-width: 650px) {
+          font-size: 20px;
+          margin-top: 10px;
+        }
+      }
+    }
+    .title-card-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      @media screen and (max-width: 1000px) {
+        position: absolute;
+        right: 0px;
+        bottom: -118px;
+      }
+      @media screen and (max-width: 650px) {
+        bottom: -106px;
+      }
+
+      img {
+        height: 64px;
+        width: 64px;
+        border-radius: 150px;
+        @media screen and (max-width: 600px) {
+          height: 45px;
+          width: 45px;
+        }
+      }
+      span {
+        color: $color1;
+        font-size: 18px;
+        font-weight: 500;
+        @media screen and (max-width: 650px) {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  .tag-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    margin-bottom: 20px;
+    @media screen and (max-width: 1000px) {
+      flex-direction: column;
+      align-items: start;
+      gap: 45px;
+    }
+    .tag-card-left {
+      width: 55%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 20px;
+      @media screen and (max-width: 1350px) {
+        width: 680px;
+      }
+
+      @media screen and (max-width: 600px) {
+        width: 100%;
+        gap: 8px;
+      }
+      span {
+        background: $color1;
+        color: $white;
+        border-radius: 10px;
+        padding: 5px 50px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        @media screen and (max-width: 720px) {
+          padding: 5px 13px;
+          font-size: 10px;
+        }
+      }
+    }
+    .tag-card-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      @media screen and (max-width: 1000px) {
+        img {
+          margin-top: -15px;
+        }
+      }
+      @media screen and (max-width: 600px) {
+        img {
+          height: 18px;
+          width: 18px;
+        }
+      }
+      i {
+        width: 24px;
+        height: 24px;
+        color: $color1;
+      }
+    }
+  }
+  .wrapper-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: start;
+    @media screen and (max-width: 1000px) {
+      grid-template-columns: 1fr;
+      gap: 0px;
+    }
+    .collapsible-card {
+      font-size: 18px;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .collapsible-item-card {
+        margin-bottom: 20px;
+        position: relative;
+        width: 100%;
+      }
+    }
+
+    .collapsible-card input {
+      display: none;
+    }
+    .collapsible-card label {
+      position: relative;
+      font-weight: 600;
+      background: $color1;
+      color: $white;
+      display: block;
+      margin-bottom: 10px;
+      cursor: pointer;
+      padding: 15px;
+      border-radius: 15px;
+      z-index: 1;
+      margin-bottom: 50px;
+      @media screen and (max-width: 1000px) {
+        margin-bottom: 0;
+      }
+      @media screen and (max-width: 540px) {
+        font-size: 14px;
+      }
+    }
+    .collapsible-card label:after {
+      content: "";
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      transform-origin: center;
+      width: 25px;
+      height: 18px;
+      background: url(../../assets/img/Vector.png) no-repeat 0 0;
+      transition: all 0.3s ease;
+      @media screen and (max-width: 540px) {
+        height: 9px;
+        width: 25px;
+      }
+    }
+    .collapsible-card input:checked + label:after {
+      transform: rotate(180deg) translateY(50%);
+    }
+    .collapsible-card input:checked ~ label {
+      margin-bottom: 0;
+    }
+
+    .collapsible-text-card {
+      max-height: 0;
+      overflow: hidden;
+      border-radius: 4px;
+      line-height: 1.4;
+      position: relative;
+      top: -100%;
+      opacity: 0;
+      transition: all 0.2s ease;
+    }
+    .collapsible-card input:checked ~ .collapsible-text-card {
+      max-height: 300px;
+      padding-bottom: 0;
+      background: $white;
+      opacity: 1;
+      top: 0;
+    }
+    .collapsible-text-card p {
+      padding: 15px 15px 5px 15px;
+      font-weight: none;
+      font-size: 18px;
+      background: #fcfcfc;
+      text-align: left;
+      line-height: 1.2;
+      @media screen and (max-width: 540px) {
+        font-size: 14px;
+      }
+    }
+  }
+}

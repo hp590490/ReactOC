@@ -1,43 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Annonceur from "../assets/img/Portrait-professionnel-3.jpg";
 import Star from "../assets/img/star.png";
-import Caroussel1 from "../assets/img/caroussel.png";
-import Caroussel2 from "../assets/img/bg-header.jpg";
-import Caroussel3 from "../assets/img/bg-about.jpg";
+import EmptyStar from "../assets/img/emptystar.png";
+import { useParams } from "react-router-dom";
+import data from "../assets/logements.json";
 
 const Logement = () => {
+  const { id } = useParams(); // pour trouver dans l'URL l'id correspondant à la carte cliquée par le visiteur
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const slides = [Caroussel1, Caroussel2, Caroussel3];
+  const [logement, setLogement] = useState(null);
+  const maxRating = 5;
+  useEffect(() => {
+    const logementData = data.find((log) => log.id === id); // on va donner à logementData le logement correspondant à l'id de l'URL déclaré en haut, une fois cela récupéré on pourra faire découler toutes ces données
+    setLogement(logementData);
+  }, [id]);
 
   const changeSlide = (direction) => {
     setActiveIndex((prevIndex) => {
       let newIndex = prevIndex + direction;
-      if (newIndex < 0) newIndex = slides.length - 1;
-      if (newIndex >= slides.length) newIndex = 0;
-
+      if (newIndex < 0) newIndex = logement.pictures.length - 1;
+      if (newIndex >= logement.pictures.length) newIndex = 0;
       return newIndex;
     });
   };
+  if (!logement) {
+    return <p>Erreur, chargement...</p>;
+  }
   return (
     <div>
       <Header />
       <div className="main-content">
         <div className="caroussel">
-          {slides.length > 1 && (
+          {logement.pictures.length > 1 && (
             <>
               <button className="btn" onClick={() => changeSlide(-1)} id="prev">
-                <i class="fa-solid fa-angle-left"></i>
+                <i className="fa-solid fa-angle-left"></i>
               </button>
               <button className="btn" onClick={() => changeSlide(1)} id="next">
-                <i class="fa-solid fa-angle-right"></i>
+                <i className="fa-solid fa-angle-right"></i>
               </button>
             </>
           )}
           <ul>
-            {slides.map((slide, index) => (
+            {logement.pictures.map((slide, index) => (
               <li
                 key={index}
                 className={`slide ${index === activeIndex ? "active" : ""}`}
@@ -47,36 +53,44 @@ const Logement = () => {
             ))}
           </ul>
           <p>
-            {activeIndex + 1}/{slides.length}
+            {activeIndex + 1}/{logement.pictures.length}
           </p>
         </div>
+
         <div className="title-card">
           <div className="title-card-left">
-            <h2>Cozt loft on the Canal Saint-Martin</h2>
-            <p>Paris, Île-de-France</p>
+            <h2>{logement.title}</h2>
+            <p>{logement.location}</p>
           </div>
           <div className="title-card-right">
-            <span>
-              Alexandre <br />
-              Dumas
-            </span>
-            <img src={Annonceur} alt="portrait annonceur" />
+            <span>{logement.host.name}</span>
+            <img
+              src={logement.host.picture}
+              alt={"portrait " + logement.host.name}
+            />
           </div>
         </div>
 
         <div className="tag-card">
           <div className="tag-card-left">
-            {" "}
-            <span>Cozy</span>
-            <span>Canal</span>
-            <span>Paris 10</span>
+            {logement.tags.map((tag, index) => (
+              <span key={index}>{tag}</span>
+            ))}
           </div>
           <div className="tag-card-right">
-            <img src={Star} alt="raiting" />
-            <img src={Star} alt="raiting" />
-            <img src={Star} alt="raiting" />
-            <img src={Star} alt="raiting" />
-            <img src={Star} alt="raiting" />
+            {Array.from({ length: maxRating }, (_, index) => (
+              <img
+                key={index}
+                src={
+                  index < Math.round(Number(logement.rating)) ? Star : EmptyStar
+                }
+                alt={
+                  index < Math.round(Number(logement.rating))
+                    ? "Étoile pleine"
+                    : "Étoile vide"
+                }
+              />
+            ))}
           </div>
         </div>
         <div className="wrapper-card">
@@ -85,7 +99,7 @@ const Logement = () => {
               <input type="checkbox" id="collapsible-head-1" />
               <label htmlFor="collapsible-head-1">Description</label>
               <div className="collapsible-text-card">
-                <p>Test1111</p>
+                <p>{logement.description}</p>
               </div>
             </div>
           </div>
@@ -94,12 +108,9 @@ const Logement = () => {
               <input type="checkbox" id="collapsible-head-2" />
               <label htmlFor="collapsible-head-2">Equipements</label>
               <div className="collapsible-text-card">
-                <p>Test2222</p>
-                <p>Test2222</p>
-                <p>Test2222</p>
-                <p>Test2222</p>
-                <p>Test2222</p>
-                <p>Test2222</p>
+                {logement.equipments.map((equipment, index) => (
+                  <p key={index}>{equipment}</p>
+                ))}
               </div>
             </div>
           </div>

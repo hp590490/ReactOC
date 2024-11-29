@@ -2,12 +2,16 @@ import React from "react";
 import Header from "../components/Header";
 import Card from "../components/Card";
 import Footer from "../components/Footer";
-import { NavLink } from "react-router-dom";
-import data from "../assets/logements.json";
+import { Helmet } from "react-helmet";
 
 const Home = () => {
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Accueil</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <Header />
       <div className="txt-header">
         <div className="overlay"></div>

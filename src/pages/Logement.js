@@ -5,6 +5,7 @@ import Star from "../assets/img/star.png";
 import EmptyStar from "../assets/img/emptystar.png";
 import { useParams } from "react-router-dom";
 import data from "../assets/logements.json";
+import { Helmet } from "react-helmet";
 
 const Logement = () => {
   const { id } = useParams(); // pour trouver dans l'URL l'id correspondant à la carte cliquée par le visiteur
@@ -29,6 +30,11 @@ const Logement = () => {
   }
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Logement</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <Header />
       <div className="main-content">
         <div className="caroussel">

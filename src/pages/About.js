@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Helmet } from "react-helmet";
 
 const aboutList = [
   {
@@ -27,6 +28,11 @@ const aboutList = [
 const About = () => {
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>A propos</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <Header />
       <div className="img-about">
         <div className="overlay-about"></div>

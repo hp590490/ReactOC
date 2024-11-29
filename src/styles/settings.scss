@@ -10,12 +10,6 @@ $white: #ffffff;
 $grey: #f6f6f6;
 $color1: #ff6060;
 
-@mixin verticalCenter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 * {
   padding: 0;
   margin: 0;

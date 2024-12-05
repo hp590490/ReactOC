@@ -1,12 +1,11 @@
 // eslint.config.js
-import prettier from "eslint-config-prettier";
-import react from "eslint-plugin-react";
+prettier = require("eslint-config-prettier");
+react = require("eslint-plugin-react");
 
-export default [
+module.exports = [
   {
     rules: {
-      semi: "error",
-      "prefer-const": "error",
+      "linebreak-style": ["error", "windows"],
     },
   },
   prettier,
@@ -31,7 +30,6 @@ export default [
     rules: {
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
-      "linebreak-style": ["error", "windows"],
     },
   },
 ];

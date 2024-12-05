@@ -1,5 +1,11 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useParams,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Logement from "./pages/Logement";
@@ -15,7 +21,7 @@ const App = () => {
         {data.map((idlogement) => (
           <Route
             path={"/logement/:id"}
-            element={<Logement />}
+            element={<LogementVerify />}
             key={idlogement.id}
           />
         ))}
@@ -23,6 +29,15 @@ const App = () => {
       </Routes>
     </BrowserRouter>
   );
+};
+
+const LogementVerify = () => {
+  const { id } = useParams();
+  const logementExists = data.some((logement) => logement.id === id);
+  if (!logementExists) {
+    return <Navigate to="/error" />;
+  }
+  return <Logement />;
 };
 
 export default App;

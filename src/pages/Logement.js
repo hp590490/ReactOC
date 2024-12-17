@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Collapse from "../components/Collapse";
+import Caroussel from "../components/Caroussel";
 import Star from "../assets/img/star.png";
 import EmptyStar from "../assets/img/emptystar.png";
-import { useParams } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 import data from "../assets/logements.json";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const Logement = () => {
   const { id } = useParams(); // pour trouver dans l'URL l'id correspondant à la carte cliquée par le visiteur
-  const [activeIndex, setActiveIndex] = useState(0);
   const [logement, setLogement] = useState(null);
   const maxRating = 5;
   useEffect(() => {
@@ -17,16 +18,12 @@ const Logement = () => {
     setLogement(logementData);
   }, [id]);
 
-  const changeSlide = (direction) => {
-    setActiveIndex((prevIndex) => {
-      let newIndex = prevIndex + direction;
-      if (newIndex < 0) newIndex = logement.pictures.length - 1;
-      if (newIndex >= logement.pictures.length) newIndex = 0;
-      return newIndex;
-    });
-  };
   if (!logement) {
-    return <p>Erreur, chargement...</p>;
+    const logementExists = data.some((logement) => logement.id === id);
+    if (!logementExists) {
+      return <Navigate to="/error" />;
+    }
+    return <p>Chargement...</p>;
   }
   return (
     <div>
@@ -37,32 +34,7 @@ const Logement = () => {
       </Helmet>
       <Header />
       <div className="main-content">
-        <div className="caroussel">
-          {logement.pictures.length > 1 && (
-            <>
-              <button className="btn" onClick={() => changeSlide(-1)} id="prev">
-                <i className="fa-solid fa-angle-left"></i>
-              </button>
-              <button className="btn" onClick={() => changeSlide(1)} id="next">
-                <i className="fa-solid fa-angle-right"></i>
-              </button>
-            </>
-          )}
-          <ul>
-            {logement.pictures.map((slide, index) => (
-              <li
-                key={index}
-                className={`slide ${index === activeIndex ? "active" : ""}`}
-              >
-                <img src={slide} alt={`Caroussel ${index + 1}`} />
-              </li>
-            ))}
-          </ul>
-          <p>
-            {activeIndex + 1}/{logement.pictures.length}
-          </p>
-        </div>
-
+        <Caroussel pictures={logement.pictures} />
         <div className="title-card">
           <div className="title-card-left">
             <h2>{logement.title}</h2>
@@ -76,7 +48,6 @@ const Logement = () => {
             />
           </div>
         </div>
-
         <div className="tag-card">
           <div className="tag-card-left">
             {logement.tags.map((tag, index) => (
@@ -102,22 +73,21 @@ const Logement = () => {
         <div className="wrapper-card">
           <div className="collapsible-card">
             <div className="collapsible-item-card">
-              <input type="checkbox" id="collapsible-head-1" />
-              <label htmlFor="collapsible-head-1">Description</label>
-              <div className="collapsible-text-card">
-                <p>{logement.description}</p>
-              </div>
+              <Collapse title="Description" content={logement.description} />
             </div>
           </div>
           <div className="collapsible-card">
             <div className="collapsible-item-card">
-              <input type="checkbox" id="collapsible-head-2" />
-              <label htmlFor="collapsible-head-2">Equipements</label>
-              <div className="collapsible-text-card">
-                {logement.equipments.map((equipment, index) => (
-                  <p key={index}>{equipment}</p>
-                ))}
-              </div>
+              <Collapse
+                title="Equipements"
+                content={
+                  <ul>
+                    {logement.equipments.map((equipment, index) => (
+                      <li key={index}>{equipment}</li>
+                    ))}
+                  </ul>
+                }
+              />
             </div>
           </div>
         </div>

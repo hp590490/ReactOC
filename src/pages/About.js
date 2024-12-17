@@ -1,31 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Helmet } from "react-helmet";
+import Collapse from "../components/Collapse";
 
-const aboutList = [
-  {
-    title: "Fiabilité",
-    content:
-      "Les annonces postées sur Kasa garantissent une fiabilité totale. Les photos sont conformes aux logements, et toutes les informations sont régulièrement vérifiées par nos équipes.",
-  },
-  {
-    title: "Respect",
-    content:
-      "La bienveillance fait partie des valeurs fondatrices de Kasa. Tout comportement discriminatoire ou de perturbation du voisinage entraînera une exclusion de notre plateforme.",
-  },
-  {
-    title: "Service",
-    content:
-      "Nos équipes se tiennent à votre disposition pour vous fournir une expérience parfaite. N'hésitez pas à nous contacter si vous avez la moindre question.",
-  },
-  {
-    title: "Sécurité",
-    content:
-      "La sécurité est la priorité de Kasa. Aussi bien pour nos hôtes que pour les voyageurs, chaque logement correspond aux critères de sécurité établis par nos services. En laissant une note aussi bien à l'hôte qu'au locataire, cela permet à nos équipes de vérifier que les standards sont bien respectés. Nous organisons également des ateliers sur la sécurité domestique pour nos hôtes.",
-  },
-];
+import { Helmet } from "react-helmet-async";
+
 const About = () => {
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null); // pour gérer les erreurs de récupération
+
+  useEffect(() => {
+    const fetchAbouts = async () => {
+      try {
+        const response = await fetch("/about.json");
+        const about = await response.json();
+        setData(about);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchAbouts();
+  }, []);
+  if (error) {
+    return error;
+  }
   return (
     <div>
       <Helmet>
@@ -39,14 +38,8 @@ const About = () => {
       </div>
       <div className="wrapper">
         <div className="collapsible">
-          {aboutList.map((about, index) => (
-            <div key={index} className="collapsible-item">
-              <input type="checkbox" id={`collapsible-head-${index}`} />
-              <label htmlFor={`collapsible-head-${index}`}>{about.title}</label>
-              <div className="collapsible-text">
-                <p>{about.content}</p>
-              </div>
-            </div>
+          {data.map((about, index) => (
+            <Collapse key={index} title={about.title} content={about.content} />
           ))}
         </div>
       </div>

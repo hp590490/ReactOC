@@ -6,21 +6,44 @@ import Caroussel from "../components/Caroussel";
 import Star from "../assets/img/star.png";
 import EmptyStar from "../assets/img/emptystar.png";
 import { useParams, Navigate } from "react-router-dom";
-import data from "../assets/logements.json";
 import { Helmet } from "react-helmet-async";
 
 const Logement = () => {
-  const { id } = useParams(); // pour trouver dans l'URL l'id correspondant à la carte cliquée par le visiteur
+  const { id } = useParams();
+  const [data, setData] = useState([]);
   const [logement, setLogement] = useState(null);
+  const [error, setError] = useState(null);
   const maxRating = 5;
+
   useEffect(() => {
-    const logementData = data.find((log) => log.id === id); // on va donner à logementData le logement correspondant à l'id de l'URL déclaré en haut, une fois cela récupéré on pourra faire découler toutes ces données
-    setLogement(logementData);
-  }, [id]);
+    const fetchLogements = async () => {
+      try {
+        const response = await fetch("/logements.json");
+        const logements = await response.json();
+        setData(logements);
+      } catch (error) {
+        console.error("Fetch error:", error);
+        setError(error.message);
+      }
+    };
+
+    fetchLogements();
+  }, []);
+
+  useEffect(() => {
+    if (data.length > 0) {
+      const logementData = data.find((log) => log.id === String(id));
+      setLogement(logementData);
+    }
+  }, [data, id]);
+
+  if (error) {
+    return { error };
+  }
 
   if (!logement) {
-    const logementExists = data.some((logement) => logement.id === id);
-    if (!logementExists) {
+    const logementExists = data.some((log) => log.id === String(id));
+    if (!logementExists && data.length > 0) {
       return <Navigate to="/error" />;
     }
     return <p>Chargement...</p>;
